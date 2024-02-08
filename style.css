@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2family=Roboto+Mono&display=swap');
+
+:root {
+  --bgcolor: #333;
+  --textprimary: #fff;
+  --textsecondary: #666;
+  --primarycolor: #fd4;
+}
+
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  background-color: var(--bgcolor);
+  color: var(--textprimary);
+  font-size: 1.4rem;
+}
+
+main {
+  width: 600px;
+  margin: 50px auto;
+}
+
+h1 {
+  color: var(--primarycolor);
+  font-size: 36px;
+}
+
+
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header svg {
+  margin-right: 8px;
+  fill: var(--primarycolor);
+}
+
+
+
+#header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 20px 6px 30px;
+}
+
+#buttons {
+  text-align: right;
+}
+
+#info {
+  color: var(--primarycolor);
+}
+
+
+
+button {
+  background: rgba(255, 255, 255, .2);
+  border: 0;
+  color: rgba(255, 255, 255, .5);
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+div#game {
+  line-height: 35px;
+  height: 140px;
+  overflow: hidden;
+}
+
+#words{
+  color: var(--textsecondary);
+}
+
+div.word {
+  display: inline-block;
+  font-family: 'Roboto Mono', monospace;
+  margin: 0 5px;
+}
+
+.letter.correct{
+  color: #fff;
+}
+
+.letter.wrong{
+  color: #f55;
+}
