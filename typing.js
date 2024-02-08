@@ -20,7 +20,7 @@ function removeClass(el, name) {
   el.classname = el.classname.replace(name, '');
 }
 
-//
+// Display of random typing test words
 function newgame() {
   document.getElementById('words').innerHTML = '';
   for (let i = 0; i < 200; i++) {
