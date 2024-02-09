@@ -37,7 +37,6 @@ document.getElementById('game').addEventListener("keyup", (e) => {
   const key = e.key;
   const currentLetter = document.querySelector('.letter.current');
   const expected = currentLetter.innerHTML;
-  alert("ouch");
 })
 
 newgame();

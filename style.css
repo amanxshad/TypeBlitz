@@ -88,3 +88,23 @@ div.word {
 .letter.wrong{
   color: #f55;
 }
+
+@keyframes blink{
+    0%, 100%{
+      opacity: 1;
+    }
+    50%{
+      opacity: 0;
+    }
+  
+  }
+  
+  #cursor {
+    width: 2px;
+    height: 1.6rem;
+    background-color: var(--primarycolor);
+    position: relative;
+    top: 33px;
+    left: 2px;
+    animation: blink 1s infinite;;
+  }
