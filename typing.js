@@ -1,4 +1,4 @@
-const words = 'the quick brown fox jumps over the lazy dog each day brings new opportunities for growth and learning time flies when having fun so make the most of every moment life is a journey filled with unexpected twists and turns Success often comes to those who persevere and never give up on their dreams remember to stay true to yourself and embrace the challenges that come your way'.split(' ');
+const words = 'the quick brown fox jumps over the lazy dog each day brings new opportunities for growth and learning time flies when having fun so make the most of every moment life is a journey filled with unexpected twists and turns success often comes to those who persevere and never give up on their dreams remember to stay true to yourself and embrace the challenges that come your way'.split(' ');
 const wordsCount = words.length;
 
 // generating random word order
@@ -48,21 +48,34 @@ document.getElementById('game').addEventListener("keyup", (e) => {
   const key = e.key;
   const currentLetter = document.querySelector('.letter.current');
   const currentWord = document.querySelector('.word.current');
-  
+  const expected = currentLetter?.innerHTML || ' ';
   const isLetter = key.length === 1 && key !== ' ';
   const isSpace = key === ' ';
 
 
   if (isLetter) {
-    const expected = currentLetter.innerHTML;
     if (currentLetter) {
       addClass(currentLetter, key === expected ? 'correct' : 'incorrect');
       removeClass(currentLetter, 'current');
-      addClass(currentLetter.nextSibling, 'current');
+      if(currentLetter.nextSibling){
+        addClass(currentLetter.nextSibling, 'current');
+      }  
+    } else {
+      const incorrectLetter = document.createElement('span');
+      incorrectLetter.innerHTML = key;
+      incorrectLetter.className = 'letter incorrect extra';
+      currentWord.appendChild(incorrectLetter);
     }
   }
   
   if (isSpace) {
+
+    if (expected !== ' ') {
+      const lettersToInvalidate = [...document.querySelectorAll('.word.current .letter:not(.correct)')];
+      lettersToInvalidate.forEach(letter => {
+        addClass(letter, 'incorrect');
+      });
+    }
 
     removeClass(currentWord, 'current');
     const nextWord = getNextWord(currentWord);
@@ -76,10 +89,16 @@ document.getElementById('game').addEventListener("keyup", (e) => {
         addClass(nextWordFirstLetter, 'current');
       }
     }
-    
-    
   }
-  
+
+  // move cursor 
+  const nextLetter = document.querySelector('.letter.current');
+  const nextWord = document.querySelector('.word.current');
+  const cursor = document.getElementById('cursor');
+
+  addClass(cursor,'change');
+  cursor.style.top = (nextLetter || nextWord || ' ').getBoundingClientRect().top + 2 + 'px';
+  cursor.style.left = (nextLetter || nextWord || ' ').getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
 })
 
 newgame();
