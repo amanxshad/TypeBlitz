@@ -4,7 +4,7 @@ const wordsCount = words.length;
 // generating random word order
 function randomword() {
   const randomindex = Math.ceil(Math.random() * wordsCount);
-  return words[randomindex];
+  return words[randomindex - 1];
 }
 
 // segregating each word letter 
@@ -12,15 +12,26 @@ function formatWord(word) {
   return `<div class="word"><span class="letter">${word.split('').join('</span><span class="letter">')}</span></div>`;
 }
 
-// for tracking current word and current letter
+// adding & removing CSS classes for tracking current letter and word
 function addClass(el, name) {
-  el.classname += ' ' + name;
+  el.className += ' ' + name;
 }
 function removeClass(el, name) {
-  el.classname = el.classname.replace(name, '');
+  el.className = el.className.replace(name, '');
 }
 
-// Display of random typing test words
+function getNextWord(currentWord) {
+  let nextNode = currentWord.nextSibling;
+  while (nextNode) {
+    if (nextNode.nodeType === 1 && nextNode.classList.contains('word')) {
+      return nextNode;
+    }
+    nextNode = nextNode.nextSibling;
+  }
+  return null; // No next word found
+}
+
+//
 function newgame() {
   document.getElementById('words').innerHTML = '';
   for (let i = 0; i < 200; i++) {
@@ -36,7 +47,39 @@ document.getElementById('game').addEventListener("keyup", (e) => {
   console.log(e);
   const key = e.key;
   const currentLetter = document.querySelector('.letter.current');
-  const expected = currentLetter.innerHTML;
+  const currentWord = document.querySelector('.word.current');
+  
+  const isLetter = key.length === 1 && key !== ' ';
+  const isSpace = key === ' ';
+
+
+  if (isLetter) {
+    const expected = currentLetter.innerHTML;
+    if (currentLetter) {
+      addClass(currentLetter, key === expected ? 'correct' : 'incorrect');
+      removeClass(currentLetter, 'current');
+      addClass(currentLetter.nextSibling, 'current');
+    }
+  }
+  
+  if (isSpace) {
+
+    removeClass(currentWord, 'current');
+    const nextWord = getNextWord(currentWord);
+    if (nextWord) {
+      addClass(nextWord, 'current');
+      const nextWordFirstLetter = nextWord.querySelector('.letter');
+      if (currentLetter) {
+        removeClass(currentLetter, 'current');
+      }
+      if (nextWordFirstLetter) {
+        addClass(nextWordFirstLetter, 'current');
+      }
+    }
+    
+    
+  }
+  
 })
 
 newgame();

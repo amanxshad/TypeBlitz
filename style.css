@@ -71,7 +71,9 @@ div#game {
   overflow: hidden;
 }
 
-#words{
+
+
+#words {
   color: var(--textsecondary);
 }
 
@@ -81,30 +83,34 @@ div.word {
   margin: 0 5px;
 }
 
-.letter.correct{
+.letter.correct {
   color: #fff;
 }
 
-.letter.wrong{
+.letter.incorrect {
   color: #f55;
 }
 
-@keyframes blink{
-    0%, 100%{
-      opacity: 1;
-    }
-    50%{
-      opacity: 0;
-    }
-  
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
   }
-  
-  #cursor {
-    width: 2px;
-    height: 1.6rem;
-    background-color: var(--primarycolor);
-    position: relative;
-    top: 33px;
-    left: 2px;
-    animation: blink 1s infinite;;
+
+  50% {
+    opacity: 0;
   }
+
+}
+
+#cursor {
+  width: 2px;
+  height: 1.6rem;
+  background-color: var(--primarycolor);
+  position: relative;
+  top: 33px;
+  left: 2px;
+  animation: blink 1s infinite;
+  ;
+}
