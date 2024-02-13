@@ -51,15 +51,17 @@ document.getElementById('game').addEventListener("keyup", (e) => {
   const expected = currentLetter?.innerHTML || ' ';
   const isLetter = key.length === 1 && key !== ' ';
   const isSpace = key === ' ';
+  const isBackspace = key === 'Backspace';
+  const isFirstLetter = currentLetter === currentWord.firstChild;
 
 
   if (isLetter) {
     if (currentLetter) {
       addClass(currentLetter, key === expected ? 'correct' : 'incorrect');
       removeClass(currentLetter, 'current');
-      if(currentLetter.nextSibling){
+      if (currentLetter.nextSibling) {
         addClass(currentLetter.nextSibling, 'current');
-      }  
+      }
     } else {
       const incorrectLetter = document.createElement('span');
       incorrectLetter.innerHTML = key;
@@ -67,9 +69,8 @@ document.getElementById('game').addEventListener("keyup", (e) => {
       currentWord.appendChild(incorrectLetter);
     }
   }
-  
-  if (isSpace) {
 
+  if (isSpace) {
     if (expected !== ' ') {
       const lettersToInvalidate = [...document.querySelectorAll('.word.current .letter:not(.correct)')];
       lettersToInvalidate.forEach(letter => {
@@ -91,12 +92,40 @@ document.getElementById('game').addEventListener("keyup", (e) => {
     }
   }
 
+  if (isBackspace) {
+    if (currentLetter && isFirstLetter) {
+
+      removeClass(currentWord, 'current');
+      addClass(currentWord.previousSibling, 'current');
+      removeClass(currentLetter, 'current');
+      addClass(currentWord.previousSibling.lastChild, 'current');
+      removeClass(currentWord.previousSibling.lastChild, 'incorrect');
+      removeClass(currentWord.previousSibling.lastChild, 'correct');
+    }
+
+    if (currentLetter && !isFirstLetter) {
+      removeClass(currentLetter, 'current');
+      addClass(currentLetter.previousSibling, 'current');
+      removeClass(currentLetter.previousSibling, 'incorrect');
+      removeClass(currentLetter.previousSibling, 'correct');
+    }
+
+    if (!currentLetter){
+      addClass(currentWord.lastChild, 'current');
+      removeClass(currentWord.lastChild, 'incorrect');
+      removeClass(currentWord.lastChild, 'correct');
+    }
+  }
+
   // move cursor 
   const nextLetter = document.querySelector('.letter.current');
   const nextWord = document.querySelector('.word.current');
   const cursor = document.getElementById('cursor');
+  const hasChangeClass = cursor.classList.contains('change');
 
-  addClass(cursor,'change');
+  if (!hasChangeClass) { 
+    addClass(cursor, 'change');
+  }
   cursor.style.top = (nextLetter || nextWord || ' ').getBoundingClientRect().top + 2 + 'px';
   cursor.style.left = (nextLetter || nextWord || ' ').getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
 })
