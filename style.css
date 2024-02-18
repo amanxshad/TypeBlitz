@@ -124,3 +124,11 @@ div.word {
   left: 3px;
   animation: blink 1s infinite;
 }
+
+#game.over #words{
+  opacity: .5;
+}
+
+#game.over #cursor{
+  display: none;
+}
