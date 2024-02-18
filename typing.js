@@ -95,7 +95,7 @@ document.getElementById('game').addEventListener("keyup", (e) => {
   if (isBackspace) {
     if (currentLetter && isFirstLetter) {
 
-      removeClass(currentWord, 'current');
+      removeClass(currentWord, 'current'); 
       addClass(currentWord.previousSibling, 'current');
       removeClass(currentLetter, 'current');
       addClass(currentWord.previousSibling.lastChild, 'current');
@@ -115,6 +115,13 @@ document.getElementById('game').addEventListener("keyup", (e) => {
       removeClass(currentWord.lastChild, 'incorrect');
       removeClass(currentWord.lastChild, 'correct');
     }
+  }
+
+  //move lines vertically
+  if(currentWord.getBoundingClientRect().top > 290){
+    const words = document.getElementById('words');
+    const margin = parseInt(words.style.marginTop || '0px');
+    words.style.marginTop = (margin -35) + 'px';
   }
 
   // move cursor 
