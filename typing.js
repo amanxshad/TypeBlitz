@@ -1,6 +1,6 @@
 const words = 'the quick brown fox jumps over the lazy dog each day brings new opportunities for growth and learning time flies when having fun so make the most of every moment life is a journey filled with unexpected twists and turns success often comes to those who persevere and never give up on their dreams remember to stay true to yourself and embrace the challenges that come your way'.split(' ');
 const wordsCount = words.length;
-const gameTime = 5 * 1000;
+const gameTime = 30 * 1000;
 window.timer = null;
 window.gameStart = null;
 
